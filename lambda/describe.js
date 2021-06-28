@@ -60,6 +60,9 @@ const DescribeIntentHandler = {
             let num=get_number(instance,lng)
             if(!isNaN(num) && num < (sessionAttributes.DescribeIntent.Authors.item.length)){
                 let ins=sessionAttributes.DescribeIntent.Authors.item[num].id
+                if(sessionAttributes.DescribeIntent.Authors.obj_id == 4){
+                    ins='00'+ins;
+                }
                 
                 url='cmd=dsc&ins='+ins;
                 try{

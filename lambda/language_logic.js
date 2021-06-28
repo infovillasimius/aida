@@ -1,7 +1,7 @@
 const obj_cat = [
     {
-        "en-US" : ['authors','conference acronyms','conference names'],
-        "it-IT" : ['autori','acronimi di conferenze','nomi di conferenze']
+        "en-US" : ['authors','conference acronyms','conference names','organization names'],
+        "it-IT" : ['autori','acronimi di conferenze','nomi di conferenze','nomi di organizzazioni']
     },
     
     {
@@ -924,9 +924,9 @@ const one={
 };
 
 const numbers={
-    "en-US" :['1st','2nd','3rd','4th','5th','6th','7th','8th','9th','10th','first','second','third','fourth','fifth','sixth','seventh','eighth','ninth','tenth',
-              '1','2','3','4','5','6','7','8','9','10','one','two','three','four','five','six','seven','eight','nine','ten'],
-    "it-IT" :['primo','secondo','terzo','quarto','quinto','sesto','settimo','ottavo','nono','decimo','1','2','3','4','5','6','7','8','9','10',
+    "en-US" :[ '1','2','3','4','5','6','7','8','9','10','1st','2nd','3rd','4th','5th','6th','7th','8th','9th','10th',
+             'first','second','third','fourth','fifth','sixth','seventh','eighth','ninth','tenth','one','two','three','four','five','six','seven','eight','nine','ten'],
+    "it-IT" :['1','2','3','4','5','6','7','8','9','10','primo','secondo','terzo','quarto','quinto','sesto','settimo','ottavo','nono','decimo',
               'uno','due','tre','quattro','cinque','sei','sette','otto','nove','dieci']
 }
 
@@ -943,7 +943,7 @@ const dsc_list={
               'Ratings: ','citations in the last 5 years: ','Years of activity: from ',' to ','Number of publications in the last year: ',
               'The top country in terms of publications is: ', 'The top countries in terms of publications are: ',
               'The top organization in education is: ', 'The top organizations in education are: ',
-              'The top organization in industry is: ', 'The top organizations in industry are: '],
+              'The top organization in industry is: ', 'The top organizations in industry are: ','publications in the last 5 years: ','number of affiliated authors: '],
     "it-IT" :[' è un autore' ,' affiliato a '  ,' affiliato a '      ,'Valutazioni: '  ,'pubblicazioni: ','citazioni: ','Numero di co-autori: '       ,
               'L\'argomento principale per numero di pubblicazioni è: ','Gli argomenti principali, per numero di pubblicazioni, sono: ',
               "La conferenza principale per numero di pubblicazioni è: ", "Le conferenze principali per numero di pubblicazioni sono: ",
@@ -1097,6 +1097,8 @@ function homonyms(speak,lng){
         msg=msg+num+item[i].name
         if(item[i].affiliation){
             msg=msg + homonyms_list[lng][0]+ item[i].affiliation+"; \n"
+        } else if(item[i].country) {
+            msg += ' - ' + item[i].country+"; \n";
         } else if(item[i].paper) {
             msg=msg + homonyms_list[lng][1]+ item[i].paper+"; \n"
         } else if(item[i].publications) {
@@ -1151,11 +1153,21 @@ function get_choice(speak,num){
 }
 
 function list_elements(list,lng,element){
-    let blacklist=['computer science']
-    for (let i in list){
-		if(blacklist.indexOf(list[i][element])!==-1){
-			list.splice(i, 1); 
-            i--;
+    let blacklist=['computers science'];
+	let blacklist2 = ['lecture notes in computer science', 'arxiv software engineering']
+	if(element.length>0){
+		for (let i in list){
+			if(blacklist.indexOf(list[i][element])!==-1 || blacklist2.indexOf(list[i][element])!==-1){
+				list.splice(i, 1); 
+				i--;
+			}
+		}
+	} else {
+		for (let i in list){
+			if(blacklist.indexOf(list[i])!==-1 || blacklist2.indexOf(list[i])!==-1){
+				list.splice(i, 1); 
+				i--;
+			}
 		}
 	}
     let msg='';
@@ -1257,6 +1269,48 @@ function dsc(query,lng){
         if(item.top_3_company){
             msg+=(item.top_3_company.length==1 ? dsc_list[lng][24]:dsc_list[lng][25])
             msg+=list_elements(item.top_3_company,lng,'')
+        }
+        
+    } else if (query.obj_id===4){
+        msg+= item.name + (item.country ? ' - ' + item.country + ' -':'') + ' is an organization';
+		
+		
+		if(item.type && (item.type == 'academia' || item.type == 'industry')){
+			
+			msg += ' in ' + (item.type=='academia' ?'Edu':'Industry') + ' sector. ';
+		} else {
+			msg += '. ';
+		}
+		
+		msg += dsc_list[lng][15];
+		if(item['h5-index']){
+            msg +='h5-index: '+item['h5-index']+'; ';
+        }
+        
+		if(item['publications_5']){
+			msg += dsc_list[lng][26]+item['publications_5']+'; ';
+        }
+        
+		if(item['citations_5']){
+            msg += dsc_list[lng][16]+item['citations_5']+'; ';
+        }
+        
+		if(item['authors_number']){
+            msg += dsc_list[lng][27]+item['authors_number']+'; ';
+        }
+        
+		if(item.top_3_topics && item.top_3_topics.length>0){
+            msg += (item.top_3_topics.length==1 ? dsc_list[lng][7]: dsc_list[lng][8]);
+            msg += list_elements(item.top_3_topics,lng,'');
+        }
+        
+		if(item.top_3_conferences && item.top_3_conferences.length>0){
+            msg += (item.top_3_conferences.length==1 ? dsc_list[lng][9]: dsc_list[lng][10]);
+            msg += list_elements(item.top_3_conferences,lng,'');
+        }
+		if(item.top_3_journals && item.top_3_journals.length>0){
+            msg += (item.top_3_journals.length==1 ? dsc_list[lng][11]: dsc_list[lng][12]);
+            msg += list_elements(item.top_3_journals,lng,'');
         }
         
     } else {

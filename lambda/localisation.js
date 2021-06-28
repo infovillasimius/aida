@@ -4,8 +4,8 @@ module.exports = {
             WELCOME_MSG: 'Welcome, you can ask to perform a query on the data contained in the AIDA database or ask for Help. What would you like to try?',
             HELLO_MSG: 'Hello',
             OK_MSG: 'Ok',
-            HELP_MSG: ['you can ask to count or list authors, papers, conferences, organizations, topics and citations or to describe authors or conferences. Start a query with list, count or describe',
-                       'You can ask a query starting with count, list, describe, who or what'],
+            HELP_MSG: ['you can ask to count or list authors, papers, conferences, organizations, topics and citations or to describe authors, conferences or organizations. Start a query with list, count or describe',
+                       'You can ask a query starting with count, list or describe'],
             GOODBYE_MSG: ['Goodbye!','Bye!','See you later'],
             REFLECTOR_MSG: 'You just triggered {{intent}}',
             FALLBACK_MSG: 'Sorry, I don\'t know that. Please try again.',
@@ -38,8 +38,8 @@ module.exports = {
             LIST_SUBJECT_REQUEST_MSG:'I can list papers, authors, conferences, organizations and topics. What do you want me to list?',
             LIST_SUBJECT_WRONG_MSG:'Sorry, I can\'t list {{sub}}. I can list papers, authors, conferences, organizations and topics. What do you prefer?',
             LIST_SUBJECT_REQUEST_REPROMPT_MSG:'I can list papers, authors, conferences, organizations and topics. What do you prefer?',
-            LIST_ORDER_MSG:'Do you want your list of the top {{number}} {{subject}} to be sorted by publications, by publications in the last 5 years, by citations or by citations in the last 5 years?',
-            LIST_PAPERS_ORDER_MSG:'Do you want your list of the top {{number}} {{subject}} to be sorted by citations or by citations in the last 5 years?',
+            LIST_ORDER_MSG:'Which sorting option do you prefer between publications, publications in the last 5 years, citations and citations in the last 5 years?',
+            LIST_PAPERS_ORDER_MSG:'Which sorting option do you prefer between citations and citations in the last 5 years?',
             LIST_PAPERS_ORDER_WRONG_MSG:'Sorry, I can\'t order by {{order}}. I can order by citations and by citations in the last 5 years. What do you prefer?',
             LIST_ORDER_WRONG_MSG:'Sorry, I can\'t order by {{order}}. I can order by publications, by publications in the last 5 years, by citations and by citations in the last 5 years. What do you prefer?',
             LIST_INSTANCE_MSG:'what is the name of the {{list}} for which {{sub}} should be in the top {{number}}? You can say all for the full list',
@@ -50,7 +50,7 @@ module.exports = {
             
             DSC_TOO_GENERIC_MSG:'Your search for {{item}} got {{results}}. You need to try again and to be more specific. What is the name of the author or conference you want to know about?',
             DSC_NO_RESULT_MSG:'Your search for {{item}} got no result. You need to try again. What is the name of the author or conference you want to know about?',
-            DESCRIBE_INSTANCE_MSG: 'What is the name of the author or conference you want to know about?',
+            DESCRIBE_INSTANCE_MSG: 'What is the name of the author or conference or organizations you want to know about?',
             DESCRIBE_CONFIRM_MSG : 'Do you want to know something about {{ins}}?',
             DESCRIBE_TOPIC_MSG :'sorry but I can\'t tell you anything about the topics yet. You can ask me about conferences, organizations and authors.'
         }
