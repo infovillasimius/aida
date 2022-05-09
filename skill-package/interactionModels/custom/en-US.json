@@ -1,7 +1,7 @@
 {
   "interactionModel": {
     "languageModel": {
-      "invocationName": "aida query",
+      "invocationName": "aida project",
       "intents": [
         {
           "name": "AMAZON.FallbackIntent",
@@ -121,6 +121,25 @@
             "what is {query}",
             "who are {query}",
             "Who is {query}"
+          ]
+        },
+        {
+          "name": "CompareIntent",
+          "slots": [
+            {
+              "name": "instance_a",
+              "type": "Aida_instance"
+            },
+            {
+              "name": "instance_b",
+              "type": "Aida_instance"
+            }
+          ],
+          "samples": [
+            "Match {instance_a} to {instance_b}",
+            "Compare {instance_a} to {instance_b}",
+            "Match {instance_a} vs {instance_b}",
+            "Compare {instance_a} vs {instance_b}"
           ]
         }
       ],
@@ -668,5 +687,5 @@
       }
     ]
   },
-  "version": "122"
+  "version": "3"
 }

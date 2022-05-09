@@ -19,10 +19,10 @@ const choice_list = logic.choice_list;
 const get_choice = logic.get_choice;
 const kk_message = logic.kk_message;
 
-const DescribeIntentHandler = {
+const CompareIntentHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'DescribeIntent'
+            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'CompareIntent'
             && handlerInput.requestEnvelope.request.intent.confirmationStatus !== 'CONFIRMED'
             && handlerInput.requestEnvelope.request.intent.confirmationStatus !== 'DENIED';
     },
@@ -38,7 +38,7 @@ const DescribeIntentHandler = {
         
         if(!instance){
             return handlerInput.responseBuilder
-                .speak(handlerInput.t('DESCRIBE_INSTANCE_MSG'))
+                .speak(handlerInput.t('COMPARE_FIRST_INSTANCE'))
                 .addElicitSlotDirective('query')
                 .getResponse();
         }
@@ -112,7 +112,7 @@ const DescribeIntentHandler = {
             sessionAttributes.DescribeIntent.query = speak; 
             handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
             return handlerInput.responseBuilder
-            .speak(handlerInput.t("DESCRIBE_CONFIRM_MSG",{ins:speak.item.name}))
+            .speak(handlerInput.t("COMPARE_CONFIRM_MSG",{ins:speak.item.name}))
             .addConfirmIntentDirective(updatedIntent)
             .getResponse();
             
@@ -214,7 +214,7 @@ const ConfirmedDescribeIntentHandler = {
 };
 
 module.exports = {
-    DescribeIntentHandler,
+    CompareIntentHandler,
     DeniedDescribeIntentHandler,
     ConfirmedDescribeIntentHandler
 }

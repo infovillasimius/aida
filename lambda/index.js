@@ -10,6 +10,7 @@ const languageStrings = require('./localisation');
 const howMany = require('./howMany');
 const listTheTop = require('./listTheTop');
 const describe = require('./describe');
+const compare = require('./compare');
 const parser = require('./parser');
 
 const LaunchRequestHandler = {
